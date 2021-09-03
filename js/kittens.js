@@ -8,6 +8,7 @@ var MAX_ENEMIES = 3;
 
 var PLAYER_WIDTH = 75;
 var PLAYER_HEIGHT = 54;
+var PLAYER_MOVE = 15;
 
 // These two constants keep us from using "magic numbers" in our code
 var LEFT_ARROW_CODE = 37;
@@ -16,6 +17,11 @@ var RIGHT_ARROW_CODE = 39;
 // These two constants allow us to DRY
 var MOVE_LEFT = 'left';
 var MOVE_RIGHT = 'right';
+
+// Debug IDS
+var X_ID = "x";
+var Y_ID = "y";
+var MESSAGE_ID = "message";
 
 // Preload game images
 var images = {};
@@ -41,10 +47,25 @@ class Enemy {
 
     update(timeDiff) {
         this.y = this.y + timeDiff * this.speed;
+        //document.getElementById(MESSAGE_ID).innerHTML = "working";
     }
 
     render(ctx) {
         ctx.drawImage(this.sprite, this.x, this.y);
+    }
+    
+    getX() {
+        return this.x;
+    }
+    
+    getY() {
+        return this.y;
+    }
+    
+    display(player) {
+        document.getElementById(X_ID).innerHTML = player.getX();
+        document.getElementById(Y_ID).innerHTML = player.getY();
+        document.getElementById(MESSAGE_ID).innerHTML = this.x;
     }
 }
 
@@ -53,6 +74,21 @@ class Player {
         this.x = 2 * PLAYER_WIDTH;
         this.y = GAME_HEIGHT - PLAYER_HEIGHT - 10;
         this.sprite = images['player.png'];
+    }
+
+    getX() {
+        return this.x;
+    }
+    
+    getY() {
+        return this.y;
+    }
+    
+    withinPlayer(x, y) {
+        if (this.x <= x && x <= this.x + PLAYER_WIDTH) {
+            return true;
+        } 
+        return false;
     }
 
     // This method is called by the game engine when left/right arrows are pressed
@@ -119,7 +155,7 @@ class Engine {
 
         var enemySpot;
         // Keep looping until we find a free enemy spot at random
-        while (!enemySpot || this.enemies[enemySpot]) {
+        while (this.enemies[enemySpot]) {
             enemySpot = Math.floor(Math.random() * enemySpots);
         }
 
@@ -177,6 +213,9 @@ class Engine {
             }
         });
         this.setupEnemies();
+        
+        
+        
 
         // Check if player is dead
         if (this.isPlayerDead()) {
@@ -199,6 +238,11 @@ class Engine {
 
     isPlayerDead() {
         // TODO: fix this function!
+        
+        
+        var ar;
+        x = this.enemies.forEach(enemy => enemy.display(this.player));
+        //document.getElementById(MESSAGE_ID).innerHTML = x[0];
         return false;
     }
 }
