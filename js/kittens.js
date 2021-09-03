@@ -2,7 +2,7 @@
 var GAME_WIDTH = 375;
 var GAME_HEIGHT = 500;
 
-var ENEMY_WIDTH = 75;
+var ENEMY_WIDTH = 15;
 var ENEMY_HEIGHT = 156;
 var MAX_ENEMIES = 3;
 
@@ -66,6 +66,18 @@ class Enemy {
         return this.y;
     }
     
+    getLeftmostX() {
+        return this.x;
+    }
+    
+    getRightmostX() {
+        return this.x + ENEMY_WIDTH;
+    }
+    
+    getLowestY() {
+        return this.y + ENEMY_HEIGHT;
+    }
+    
     display(player) {
         var px = player.getX();
         var py = player.getY();
@@ -75,7 +87,8 @@ class Enemy {
         document.getElementById(Y_ID).innerHTML = player.getY();
         document.getElementById(ENEMYX_ID).innerHTML = this.x;
         document.getElementById(ENEMYY_ID).innerHTML = this.y;
-        if (px == ex && py < ey + ENEMY_HEIGHT) {
+        if ((player.withinPlayerX(this.getLeftmostX()) || player.withinPlayerX(this.getRightmostX())) 
+            && player.withinPlayerY(this.getLowestY())) {
         document.getElementById(MESSAGE_ID).innerHTML = "collision";
             playerDead = true;
         } else {
@@ -99,6 +112,30 @@ class Player {
         return this.y;
     }
     
+    getLeftmostX() {
+        return this.x;
+    }
+    
+    getRightmostX() {
+        return this.x + PLAYER_WIDTH;
+    }
+    
+    withinPlayerX(x) {
+        if (this.x <= x && x <= this.x + PLAYER_WIDTH) {
+            return true;
+        } else {
+        return false;
+        }
+    }
+    
+    withinPlayerY(y) {
+        if (this.y <= y && y <= this.y + PLAYER_HEIGHT) {
+            return true;
+        } else {
+        return false;
+        }
+        }
+    
     withinPlayer(x, y) {
         if (this.x <= x && x <= this.x + PLAYER_WIDTH) {
             return true;
@@ -109,10 +146,10 @@ class Player {
     // This method is called by the game engine when left/right arrows are pressed
     move(direction) {
         if (direction === MOVE_LEFT && this.x > 0) {
-            this.x = this.x - PLAYER_WIDTH;
+            this.x = this.x - PLAYER_MOVE;
         }
-        else if (direction === MOVE_RIGHT && this.x < GAME_WIDTH - PLAYER_WIDTH) {
-            this.x = this.x + PLAYER_WIDTH;
+        else if (direction === MOVE_RIGHT && this.x < GAME_WIDTH - PLAYER_MOVE) {
+            this.x = this.x + PLAYER_MOVE;
         }
     }
 
