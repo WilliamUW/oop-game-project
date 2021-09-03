@@ -72,15 +72,12 @@ class Enemy {
         var py = player.getY();
         var ex = this.x;
         var ey = this.y;
-        document.getElementById(X_ID).innerHTML = player.getX();
-        document.getElementById(Y_ID).innerHTML = player.getY();
+        if (px == ex && ey + ENEMY_KILL_HEIGHT < py && py < ey + ENEMY_HEIGHT) {
+            
         document.getElementById(ENEMYX_ID).innerHTML = this.x;
         document.getElementById(ENEMYY_ID).innerHTML = this.y;
-        if (px == ex && ey + ENEMY_KILL_HEIGHT < py && py < ey + ENEMY_HEIGHT) {
         document.getElementById(MESSAGE_ID).innerHTML = "You have been eaten. D:";
             playerDead = true;
-        } else {
-        //document.getElementById(MESSAGE_ID).innerHTML = "message";  
         }
     }
 }
@@ -115,6 +112,12 @@ class Player {
         else if (direction === MOVE_RIGHT && this.x < GAME_WIDTH - PLAYER_WIDTH) {
             this.x = this.x + PLAYER_WIDTH;
         }
+        updatePlayerXY();
+    }
+    
+    updatePlayerXY() {
+        document.getElementById(X_ID).innerHTML = player.getX();
+        document.getElementById(Y_ID).innerHTML = player.getY();
     }
 
     render(ctx) {
