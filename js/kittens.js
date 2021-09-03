@@ -21,6 +21,8 @@ var MOVE_RIGHT = 'right';
 // Debug IDS
 var X_ID = "x";
 var Y_ID = "y";
+var ENEMYX_ID = "enemy_x";
+var ENEMYY_ID = "enemy_y";
 var MESSAGE_ID = "message";
 
 // Preload game images
