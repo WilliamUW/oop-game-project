@@ -25,6 +25,8 @@ var ENEMYX_ID = "enemy_x";
 var ENEMYY_ID = "enemy_y";
 var MESSAGE_ID = "message";
 
+var playerDead = false;
+
 // Preload game images
 var images = {};
 ['enemy.png', 'stars.png', 'player.png'].forEach(imgName => {
@@ -65,9 +67,20 @@ class Enemy {
     }
     
     display(player) {
+        var px = player.getX();
+        var py = player.getY();
+        var ex = this.x;
+        var ey = this.y;
         document.getElementById(X_ID).innerHTML = player.getX();
         document.getElementById(Y_ID).innerHTML = player.getY();
-        document.getElementById(MESSAGE_ID).innerHTML = this.x;
+        document.getElementById(ENEMYX_ID).innerHTML = this.x;
+        document.getElementById(ENEMYY_ID).innerHTML = this.y;
+        if (px == ex && py < ey + ENEMY_HEIGHT) {
+        document.getElementById(MESSAGE_ID).innerHTML = "collision";
+            playerDead = true;
+        } else {
+        //document.getElementById(MESSAGE_ID).innerHTML = "message";  
+        }
     }
 }
 
@@ -242,10 +255,10 @@ class Engine {
         // TODO: fix this function!
         
         
-        var ar;
-        x = this.enemies.forEach(enemy => enemy.display(this.player));
+  
+        this.enemies.forEach(enemy => enemy.display(this.player));
         //document.getElementById(MESSAGE_ID).innerHTML = x[0];
-        return false;
+        return playerDead;
     }
 }
 
