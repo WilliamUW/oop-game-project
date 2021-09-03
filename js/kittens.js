@@ -104,6 +104,11 @@ class Player {
         return false;
     }
 
+    updatePlayerXY() {
+        document.getElementById(X_ID).innerHTML = player.getX();
+        document.getElementById(Y_ID).innerHTML = player.getY();
+    }
+    
     // This method is called by the game engine when left/right arrows are pressed
     move(direction) {
         if (direction === MOVE_LEFT && this.x > 0) {
@@ -115,10 +120,7 @@ class Player {
         updatePlayerXY();
     }
     
-    updatePlayerXY() {
-        document.getElementById(X_ID).innerHTML = player.getX();
-        document.getElementById(Y_ID).innerHTML = player.getY();
-    }
+    
 
     render(ctx) {
         ctx.drawImage(this.sprite, this.x, this.y);
