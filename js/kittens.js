@@ -11,6 +11,10 @@ var PLAYER_WIDTH = 75;
 var PLAYER_HEIGHT = 54;
 var PLAYER_MOVE = 15;
 
+// increase enemies
+var NEXT_THRESHOLD = 5000;
+var THRESHOLD_INTERVAL = 10000;
+
 // These two constants keep us from using "magic numbers" in our code
 var LEFT_ARROW_CODE = 37;
 var RIGHT_ARROW_CODE = 39;
@@ -105,8 +109,8 @@ class Player {
     }
 
     updatePlayerXY() {
-        document.getElementById(X_ID).innerHTML = player.getX();
-        document.getElementById(Y_ID).innerHTML = player.getY();
+        document.getElementById(X_ID).innerHTML = this.getX();
+        document.getElementById(Y_ID).innerHTML = this.getY();
     }
     
     // This method is called by the game engine when left/right arrows are pressed
@@ -117,7 +121,7 @@ class Player {
         else if (direction === MOVE_RIGHT && this.x < GAME_WIDTH - PLAYER_WIDTH) {
             this.x = this.x + PLAYER_WIDTH;
         }
-        updatePlayerXY();
+        this.updatePlayerXY();
     }
     
     
@@ -235,8 +239,11 @@ class Engine {
         });
         this.setupEnemies();
         
-        
-        
+        if (this.score > NEXT_THRESHOLD) {
+            NEXT_THRESHOLD += THRESHOLD_INTERVAL;
+            MAX_ENEMIES += 1;
+            
+            }
 
         // Check if player is dead
         if (this.isPlayerDead()) {
