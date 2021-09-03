@@ -3,6 +3,7 @@ var GAME_WIDTH = 375;
 var GAME_HEIGHT = 500;
 
 var ENEMY_WIDTH = 75;
+var ENEMY_KILL_HEIGHT = 75;
 var ENEMY_HEIGHT = 156;
 var MAX_ENEMIES = 3;
 
@@ -75,8 +76,8 @@ class Enemy {
         document.getElementById(Y_ID).innerHTML = player.getY();
         document.getElementById(ENEMYX_ID).innerHTML = this.x;
         document.getElementById(ENEMYY_ID).innerHTML = this.y;
-        if (px == ex && py < ey + ENEMY_HEIGHT) {
-        document.getElementById(MESSAGE_ID).innerHTML = "You have been eaten. :(";
+        if (px == ex && ey + ENEMY_KILL_HEIGHT < py && py < ey + ENEMY_HEIGHT) {
+        document.getElementById(MESSAGE_ID).innerHTML = "You have been eaten. D:";
             playerDead = true;
         } else {
         //document.getElementById(MESSAGE_ID).innerHTML = "message";  
