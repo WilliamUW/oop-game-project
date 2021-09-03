@@ -76,7 +76,7 @@ class Enemy {
         document.getElementById(ENEMYX_ID).innerHTML = this.x;
         document.getElementById(ENEMYY_ID).innerHTML = this.y;
         if (px == ex && py < ey + ENEMY_HEIGHT) {
-        document.getElementById(MESSAGE_ID).innerHTML = "collision";
+        document.getElementById(MESSAGE_ID).innerHTML = "You have been eaten. :(";
             playerDead = true;
         } else {
         //document.getElementById(MESSAGE_ID).innerHTML = "message";  
